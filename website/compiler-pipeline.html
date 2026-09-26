@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مراحل المترجم الست والمحاكي التفاعلي | Arabic Compiler Pipeline</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-brand">
+                <div class="nav-logo-icon">ض</div>
+                <div>
+                    <span>مترجم العربية</span>
+                    <span class="highlight" style="font-size: 0.85rem; display: block; font-weight: 500;">Arabic Compiler & IDE</span>
+                </div>
+            </a>
+
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">🏠 الرئيسية</a></li>
+                    <li><a href="architecture.html" class="nav-link">📂 تشريح الملفات الهندسية</a></li>
+                    <li><a href="ide-guide.html" class="nav-link">🖥️ دليل المحرر والأزرار</a></li>
+                    <li><a href="compiler-pipeline.html" class="nav-link active">⚙️ مراحل المترجم الست</a></li>
+                    <li><a href="requirements.html" class="nav-link">📋 متطلبات الدكتور والمطابقة</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="#simulator" class="btn btn-primary btn-sm">جرب المحاكي الحي ↓</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section style="padding: 3.5rem 0 2rem; background: var(--bg-surface); border-bottom: 1px solid var(--border-color);">
+        <div class="container">
+            <span class="section-tag">خط إنتاج الترجمة (Compiler Pipeline)</span>
+            <h1 style="margin-bottom: 1rem;">مراحل المترجم الست من النص إلى لغة التجميع</h1>
+            <p style="font-size: 1.15rem; max-width: 900px;">
+                يمر الكود العربي عبر 6 مراحل معيارية متسلسلة لضمان استخراج الرموز، التحقق من القواعد النحوية والدلالية، ثم تفكيك العمليات وتوليد كود التجميع المنخفض وتنفيذه في الذاكرة.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content Container -->
+    <main class="container" style="padding: 3.5rem 1.5rem;">
+
+        <!-- 1. المحاكي التفاعلي الحي -->
+        <section id="simulator" style="margin-bottom: 4rem;">
+            <div class="section-header" style="text-align: right; margin-bottom: 1.5rem;">
+                <span class="section-tag">المختبر والمحاكي الحي</span>
+                <h2>محاكي خط سير مراحل الترجمة التفاعلي</h2>
+                <p>اختر أحد البرامج العربية واضغط على الدوائر المرقمة لمشاهدة تحول الكود في كل مرحلة لحظة بلحظة</p>
+            </div>
+
+            <div class="sim-container">
+                <!-- Sample Selector -->
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-secondary btn-sm" onclick="selectSample('sample1')">📄 مثال 1: طباعة بسيطة</button>
+                        <button class="btn btn-secondary btn-sm" onclick="selectSample('sample2')">📄 مثال 2: متغيرات وحساب</button>
+                    </div>
+                    <div class="badge badge-success">✓ تم فحص الكود: خالي من الأخطاء</div>
+                </div>
+
+                <!-- Stage Steps Indicators -->
+                <div class="sim-stages">
+                    <div class="sim-stage-item active" onclick="selectStage(0)">
+                        <div class="sim-stage-circle">1</div>
+                        <div class="sim-stage-label">التحليل المعجمي<br><small>(Tokens)</small></div>
+                    </div>
+                    <div class="sim-stage-item" onclick="selectStage(1)">
+                        <div class="sim-stage-circle">2</div>
+                        <div class="sim-stage-label">التحليل النحوي<br><small>(AST Tree)</small></div>
+                    </div>
+                    <div class="sim-stage-item" onclick="selectStage(2)">
+                        <div class="sim-stage-circle">3</div>
+                        <div class="sim-stage-label">جدول الرموز<br><small>(Symbol Table)</small></div>
+                    </div>
+                    <div class="sim-stage-item" onclick="selectStage(3)">
+                        <div class="sim-stage-circle">4</div>
+                        <div class="sim-stage-label">الكود الوسيط<br><small>(3AC)</small></div>
+                    </div>
+                    <div class="sim-stage-item" onclick="selectStage(4)">
+                        <div class="sim-stage-circle">5</div>
+                        <div class="sim-stage-label">كود التجميع<br><small>(Assembly)</small></div>
+                    </div>
+                    <div class="sim-stage-item" onclick="selectStage(5)">
+                        <div class="sim-stage-circle">6</div>
+                        <div class="sim-stage-label">الآلة الافتراضية<br><small>(VM Execution)</small></div>
+                    </div>
+                </div>
+
+                <!-- Stage Content View (Grid) -->
+                <div class="grid-2">
+                    <div>
+                        <h4 style="margin-bottom: 0.75rem; color: var(--accent-blue);">الكود العربي المصدري المدخل:</h4>
+                        <div class="code-block" style="margin: 0;">
+                            <div class="code-header"><span>source.arb</span></div>
+                            <pre id="simSourceCode" class="code-content" style="direction: rtl; text-align: right; min-height: 250px;"></pre>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 id="simStageTitle" style="margin-bottom: 0.75rem; color: var(--accent-green);">مخرجات المرحلة:</h4>
+                        <div id="simStageOutput" class="sim-output-box">
+                            <!-- Populated dynamically via simulator.js -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. شرح المراحل الست بالتفصيل الأكاديمي -->
+        <section style="margin-bottom: 4rem;">
+            <div class="section-header" style="text-align: right; margin-bottom: 1.5rem;">
+                <span class="section-tag">الشرح النظري والأكاديمي</span>
+                <h2>التفصيل العلمي لكل مرحلة في مترجم لغة البرمجة العربية</h2>
+            </div>
+
+            <div class="grid-3">
+                <!-- 1. Lexer -->
+                <div class="card">
+                    <span class="badge badge-primary" style="margin-bottom: 1rem;">المرحلة الأولى</span>
+                    <h3 style="color: var(--accent-blue);">1. التحليل المعجمي (Lexer)</h3>
+                    <p><strong>الهدف:</strong> تحويل تسلسل المحارف النصية العربية إلى وحدات معجمية ذات معنى تسمى <code>Tokens</code>.</p>
+                    <ul style="list-style: none; font-size: 0.9rem;">
+                        <li>• <strong>تطبيع الحروف:</strong> توحيد الهمزات (أ، إ، آ -> ا) والياء والألف المقصورة لتجنب الأخطاء الإملائية.</li>
+                        <li>• <strong>تجاهل المسافات والتعليقات:</strong> دعم التعليقات أحادية السطر <code>//</code> والكتلية <code>/* ... */</code>.</li>
+                        <li>• <strong>المخرجات:</strong> ملف <code>tokens.json</code> وجدول تفاعلي في الواجهة.</li>
+                    </ul>
+                </div>
+
+                <!-- 2. Parser -->
+                <div class="card">
+                    <span class="badge badge-success" style="margin-bottom: 1rem;">المرحلة الثانية</span>
+                    <h3 style="color: var(--accent-green);">2. التحليل النحوي (Parser)</h3>
+                    <p><strong>الهدف:</strong> التحقق من مطابقة تسلسل الرموز لقواعد النحو الرسمية EBNF وبناء شجرة الإعراب المجردة <code>AST</code>.</p>
+                    <ul style="list-style: none; font-size: 0.9rem;">
+                        <li>• <strong>نوع المحلل:</strong> محلل انحداري تعاودي LL(1) بدون تكرار يساري (Left Recursion).</li>
+                        <li>• <strong>معالجة الأسبقية:</strong> تطبيق أسبقية العمليات (الأقواس، الأسس <code>^</code>، الضرب والقسمة، الجمع والطرح).</li>
+                        <li>• <strong>المخرجات:</strong> شجرة نصية <code>parse-tree.txt</code> وهرمية <code>parse-tree.json</code>.</li>
+                    </ul>
+                </div>
+
+                <!-- 3. Semantic -->
+                <div class="card">
+                    <span class="badge badge-warning" style="margin-bottom: 1rem;">المرحلة الثالثة</span>
+                    <h3 style="color: var(--accent-yellow);">3. التحليل الدلالي (Semantic)</h3>
+                    <p><strong>الهدف:</strong> فحص صحة المعاني، التحقق من مطابقة الأنواع، وبناء جداول الرموز متداخلة النطاقات.</p>
+                    <ul style="list-style: none; font-size: 0.9rem;">
+                        <li>• <strong>التحقق من الإعلانات:</strong> منع استخدام أي متغير قبل تعريفه، ومنع تكرار تعريف المعرف في نفس النطاق.</li>
+                        <li>• <strong>حماية الثوابت:</strong> إصدار خطأ دلالي فوري عند محاولة إعادة إسناد قيمة لثابت.</li>
+                        <li>• <strong>المخرجات:</strong> <code>symbols.json</code> و <code>semantic-errors.json</code>.</li>
+                    </ul>
+                </div>
+
+                <!-- 4. 3AC -->
+                <div class="card">
+                    <span class="badge badge-purple" style="margin-bottom: 1rem;">المرحلة الرابعة</span>
+                    <h3 style="color: var(--accent-mauve);">4. توليد الكود الوسيط (3AC)</h3>
+                    <p><strong>الهدف:</strong> تفكيك الجمل المعقدة إلى تعليمات وسيطة خطية ثلاثية العناوين (Three-Address Code).</p>
+                    <ul style="list-style: none; font-size: 0.9rem;">
+                        <li>• <strong>المتغيرات المؤقتة:</strong> إنشاء متغيرات مؤقتة للمتتاليات الحسابية (<code>ت1</code>، <code>ت2</code>...).</li>
+                        <li>• <strong>عناوين القفز:</strong> توليد علامات القفز الشرطي وغير الشرطي لإدارة حلقات <code>طالما</code> و <code>كرر</code> و <code>اذا</code>.</li>
+                        <li>• <strong>المخرجات:</strong> <code>three-address-code.txt</code>.</li>
+                    </ul>
+                </div>
+
+                <!-- 5. Assembly -->
+                <div class="card">
+                    <span class="badge badge-peach" style="margin-bottom: 1rem;">المرحلة الخامسة</span>
+                    <h3 style="color: var(--accent-peach);">5. توليد لغة التجميع (Assembly)</h3>
+                    <p><strong>الهدف:</strong> ترجمة الكود الوسيط إلى شفرة لغة تجميع تحاكي المعالج الفعلي (x64 / ArabicVM).</p>
+                    <ul style="list-style: none; font-size: 0.9rem;">
+                        <li>• <strong>قسم البيانات (.data):</strong> تخصيص الذاكرة للمتغيرات والثوابت والنصوص بسلاسل Null-terminated.</li>
+                        <li>• <strong>قسم التعليمات (.text):</strong> توليد أوامر النقل والعمليات الحسابية والنداء (MOV, ADD, SUB, CALL, SYSCALL).</li>
+                        <li>• <strong>المخرجات:</strong> ملف <code>assembly-code.asm</code>.</li>
+                    </ul>
+                </div>
+
+                <!-- 6. VM -->
+                <div class="card">
+                    <span class="badge badge-pink" style="margin-bottom: 1rem;">المرحلة السادسة</span>
+                    <h3 style="color: var(--accent-pink);">6. الآلة الافتراضية والتنفيذ (VM)</h3>
+                    <p><strong>الهدف:</strong> بيئة تشغيل متكاملة في الذاكرة لتنفيذ الكود وإدارة مكدس المعاملات والإدخال/الإخراج.</p>
+                    <ul style="list-style: none; font-size: 0.9rem;">
+                        <li>• <strong>إدارة الإجراءات:</strong> دعم تمرير المتغيرات بالقيمة وبالمرجع <code>بالمرجع</code> بتعديل مباشر للمتغير الأصلي.</li>
+                        <li>• <strong>التفاعل مع المستخدم:</strong> استقبال المدخلات عبر <code>اقرأ</code> وطباعة النتائج عبر <code>اطبع</code>.</li>
+                        <li>• <strong>المخرجات:</strong> شاشة المخرجات وملف <code>output.txt</code>.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <div>جميع الحقوق محفوظة &copy; 2026 | مشروع مترجم لغة البرمجة العربية ومحرر الأكواد الذكي</div>
+                <div>جامعة إب - كلية الحاسوب وتكنولوجيا المعلومات - إشراف أ.د. خالد الكهصة</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/simulator.js"></script>
+</body>
+</html>

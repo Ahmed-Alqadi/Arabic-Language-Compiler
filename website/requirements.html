@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مصفوفة متطلبات الدكتور وأسئلة المناقشة | Arabic Compiler Compliance</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-brand">
+                <div class="nav-logo-icon">ض</div>
+                <div>
+                    <span>مترجم العربية</span>
+                    <span class="highlight" style="font-size: 0.85rem; display: block; font-weight: 500;">Arabic Compiler & IDE</span>
+                </div>
+            </a>
+
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">🏠 الرئيسية</a></li>
+                    <li><a href="architecture.html" class="nav-link">📂 تشريح الملفات الهندسية</a></li>
+                    <li><a href="ide-guide.html" class="nav-link">🖥️ دليل المحرر والأزرار</a></li>
+                    <li><a href="compiler-pipeline.html" class="nav-link">⚙️ مراحل المترجم الست</a></li>
+                    <li><a href="requirements.html" class="nav-link active">📋 متطلبات الدكتور والمطابقة</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="#qa" class="btn btn-primary btn-sm">أسئلة المناقشة المتوقعة ↓</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section style="padding: 3.5rem 0 2rem; background: var(--bg-surface); border-bottom: 1px solid var(--border-color);">
+        <div class="container">
+            <span class="section-tag">المطابقة والضمان الأكاديمي</span>
+            <h1 style="margin-bottom: 1rem;">مصفوفة مطابقة متطلبات الدكتور خالد الكهصة (100%)</h1>
+            <p style="font-size: 1.15rem; max-width: 900px;">
+                توثق هذه الصفحة تحقيق المشروع لكافة الشروط والمواصفات المعيارية المحددة في توصيف مشروع المترجمات العملي بجامعة إب، مع استعراض الأسئلة التقنية المتوقعة أثناء مناقشة المشروع.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content Container -->
+    <main class="container" style="padding: 3.5rem 1.5rem;">
+
+        <!-- 1. مصفوفة تتبع المتطلبات -->
+        <section style="margin-bottom: 4rem;">
+            <div class="section-header" style="text-align: right; margin-bottom: 1.5rem;">
+                <span class="section-tag">المصفوفة الأكاديمية الرسمية</span>
+                <h2>جدول تتبع المتطلبات الوظيفية (Traceability Matrix)</h2>
+            </div>
+
+            <div class="card" style="padding: 1rem; overflow-x: auto;">
+                <table class="data-table" style="margin: 0; font-size: 0.9rem;">
+                    <thead>
+                        <tr>
+                            <th style="width: 70px;">الرقم</th>
+                            <th>المتطلب المطلوب في توصيف الدكتور</th>
+                            <th style="width: 110px;">حالة الإنجاز</th>
+                            <th>المكون المسؤول في الكود</th>
+                            <th>الملف المولد أو طريقة التحقق</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>REQ-01</strong></td>
+                            <td>استقلالية المترجم تماماً كملف تنفيذي مستقل عن بيئة المحرر</td>
+                            <td><span class="badge badge-success">منجز 100%</span></td>
+                            <td><code>ArabicCompiler.Cli/Program.cs</code></td>
+                            <td><code>ArabicCompiler.Cli.exe</code> يعمل من موجه الأوامر</td>
+                        </tr>
+                        <tr>
+                            <td><strong>REQ-02</strong></td>
+                            <td>قيام المحرر باستدعاء المترجم كعملية منفصلة (<code>Process.Start</code>)</td>
+                            <td><span class="badge badge-success">منجز 100%</span></td>
+                            <td><code>CompilerService.cs</code></td>
+                            <td>فصل طبقي تام بين GUI و Compiler Core</td>
+                        </tr>
+                        <tr>
+                            <td><strong>REQ-03</strong></td>
+                            <td>دعم اللغة العربية وتطبيع الهمزات وتجاهل التعليقات أحادية ومتعددة الأسطر</td>
+                            <td><span class="badge badge-success">منجز 100%</span></td>
+                            <td><code>Lexer.cs</code></td>
+                            <td><code>tokens.json</code> واختبارات المعجم</td>
+                        </tr>
+                        <tr>
+                            <td><strong>REQ-04</strong></td>
+                            <td>تصدير ملف الرموز المعجمية متضمناً الأسطر والأعمدة بدقة</td>
+                            <td><span class="badge badge-success">منجز 100%</span></td>
+                            <td><code>CompilerEngine.cs</code></td>
+                            <td>تصدير <code>tokens.json</code> وتبويب الرموز</td>
+                        </tr>
+                        <tr>
+                            <td><strong>REQ-05</strong></td>
+                            <td>بناء شجرة الإعراب النحوي AST عبر محلل انحداري تعاودي LL(1)</td>
+                            <td><span class="badge badge-success">منجز 100%</span></td>
+                            <td><code>Parser.cs</code> و <code>AstNodes.cs</code></td>
+                            <td>تصدير <code>parse-tree.txt</code> و <code>parse-tree.json</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>REQ-06</strong></td>
+                            <td>دعم الأنواع الأولية (صحيح، حقيقي، منطقي، حرفي، نصي)</td>
+                            <td><span class="badge badge-success">منجز 100%</span></td>
+                            <td><code>Parser.cs</code>, <code>Semantic.cs</code>, <code>VM.cs</code></td>
+                            <td>فحص التوافق وتخزين القيم في الذاكرة</td>
+                        </tr>
+                        <tr>
+                            <td><strong>REQ-07</strong></td>
+                            <td>دعم الأنواع المركبة: السجلات (<code>سجل</code>) والمصفوفات (<code>مصفوفة</code>)</td>
+                            <td><span class="badge badge-success">منجز 100%</span></td>
+                            <td><code>AstNodes.cs</code>, <code>SemanticAnalyzer.cs</code></td>
+                            <td>مثال <code>10_انواع_مركبة.arb</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>REQ-08</strong></td>
+                            <td>دعم الإجراءات (<code>اجراء</code>) مع المعاملات بالقيمة وبالمرجع (<code>بالمرجع</code>)</td>
+                            <td><span class="badge badge-success">منجز 100%</span></td>
+                            <td><code>Parser.cs</code>, <code>VirtualMachine.cs</code></td>
+                            <td>تعديل المتغير الأصلي مباشرة في الذاكرة</td>
+                        </tr>
+                        <tr>
+                            <td><strong>REQ-09</strong></td>
+                            <td>دعم الجمل الشرطية وحلقات التكرار الثلاث (<code>طالما</code>، <code>كرر..حتى</code>، <code>كرر..الى</code>)</td>
+                            <td><span class="badge badge-success">منجز 100%</span></td>
+                            <td><code>Parser.cs</code>, <code>ThreeAddressCode.cs</code></td>
+                            <td>أمثلة الحلقات والشروط الـ 3</td>
+                        </tr>
+                        <tr>
+                            <td><strong>REQ-10</strong></td>
+                            <td>إدارة جداول الرموز متداخلة النطاقات (Scoped Symbol Table) وتصديرها</td>
+                            <td><span class="badge badge-success">منجز 100%</span></td>
+                            <td><code>SymbolTable.cs</code></td>
+                            <td>تصدير <code>symbols.json</code> وتبويب الجدول</td>
+                        </tr>
+                        <tr>
+                            <td><strong>REQ-11</strong></td>
+                            <td>الفحص الدلالي: منع استخدام غير المعرف، منع التكرار، وحماية الثوابت</td>
+                            <td><span class="badge badge-success">منجز 100%</span></td>
+                            <td><code>SemanticAnalyzer.cs</code></td>
+                            <td>تصدير <code>semantic-errors.json</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>REQ-12</strong></td>
+                            <td>توليد الكود الوسيط ثلاثي العناوين (3AC) مع متغيرات مؤقتة وعناوين قفز</td>
+                            <td><span class="badge badge-success">منجز 100%</span></td>
+                            <td><code>ThreeAddressCodeGenerator.cs</code></td>
+                            <td>تصدير <code>three-address-code.txt</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>REQ-13</strong></td>
+                            <td>توليد شفرة لغة التجميع (Assembly x64/ArabicVM) متكاملة</td>
+                            <td><span class="badge badge-success">منجز 100%</span></td>
+                            <td><code>AssemblyGenerator.cs</code></td>
+                            <td>تصدير <code>assembly-code.asm</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>REQ-14</strong></td>
+                            <td>تنفيذ الكود في بيئة تشغيل آلة افتراضية ودعم المدخلات والمخرجات</td>
+                            <td><span class="badge badge-success">منجز 100%</span></td>
+                            <td><code>VirtualMachine.cs</code></td>
+                            <td>تصدير <code>output.txt</code> وشاشة المخرجات</td>
+                        </tr>
+                        <tr>
+                            <td><strong>REQ-15</strong></td>
+                            <td>محرر أكواد حديث يدعم الاتجاه العربي (RTL) وترقيم الأسطر وتتبع المؤشر</td>
+                            <td><span class="badge badge-success">منجز 100%</span></td>
+                            <td><code>MainWindow.xaml</code> (WPF)</td>
+                            <td>واجهة متكاملة مع إمكانية التبديل إلى LTR</td>
+                        </tr>
+                        <tr>
+                            <td><strong>REQ-16</strong></td>
+                            <td>الانتقال التلقائي لموقع الخطأ عند النقر المزدوج على سطر الخطأ في المحرر</td>
+                            <td><span class="badge badge-success">منجز 100%</span></td>
+                            <td><code>GridErrors_MouseDoubleClick</code></td>
+                            <td>تحديد السطر المخطئ برمجياً وتظليله</td>
+                        </tr>
+                        <tr>
+                            <td><strong>REQ-17</strong></td>
+                            <td>توفير 12 مثالاً برمجياً متكاملاً يغطي كافة جوانب القواعد والأخطاء</td>
+                            <td><span class="badge badge-success">منجز 100%</span></td>
+                            <td>مجلد <code>examples/</code></td>
+                            <td>متاحة في قائمة منسدلة بالاختبار المباشر</td>
+                        </tr>
+                        <tr>
+                            <td><strong>REQ-18</strong></td>
+                            <td>استيفاء متطلبات التسمية والتحزيم الأكاديمي (PREXE-GN و PRFL-GN)</td>
+                            <td><span class="badge badge-success">منجز 100%</span></td>
+                            <td><code>package_submission.ps1</code></td>
+                            <td>أرشيفات جاهزة في <code>submission_GN01/</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 2. بنك أسئلة المناقشة المتوقعة -->
+        <section id="qa" style="margin-bottom: 4rem;">
+            <div class="section-header" style="text-align: right; margin-bottom: 1.5rem;">
+                <span class="section-tag">التحضير للمناقشة الشفهية</span>
+                <h2>الأسئلة الشائعة والمتوقعة أثناء مناقشة المشروع وإجاباتها النموذجية</h2>
+            </div>
+
+            <div class="grid-2">
+                <!-- Question 1 -->
+                <div class="card">
+                    <h3 style="color: var(--accent-blue); font-size: 1.15rem;">س1: كيف تم حل مشكلة الغموض والأسبقية في العمليات الحسابية في المحلل النحوي؟</h3>
+                    <p style="font-size: 0.95rem; margin-top: 0.5rem;">
+                        <strong>الإجابة:</strong> تم تفكيك قواعد التعبيرات في قواعد EBNF إلى مستويات هرمية انحدارية وفق الأسبقية:
+                        <br><code>Expression -> LogicalOr -> LogicalAnd -> Equality -> Relational -> Term (جمع/طرح) -> Factor (ضرب/قسمة/باقي) -> Power (أس ^) -> Primary (أقواس/أعداد/معرفات)</code>.
+                        هذا الترتيب يضمن أن الأقواس والأسس تحسب أولاً قبل الضرب، والضرب قبل الجمع تلقائياً وبشكل قطعي دون أي التباس.
+                    </p>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="card">
+                    <h3 style="color: var(--accent-green); font-size: 1.15rem;">س2: ما هي آلية تطبيق التمرير بالمرجع (By Reference) في الإجراءات؟</h3>
+                    <p style="font-size: 0.95rem; margin-top: 0.5rem;">
+                        <strong>الإجابة:</strong> عند الإعلان عن المعامل بكلمة <code>بالمرجع س: صحيح</code>، يقوم المحلل النحوي بوسم المعامل بأنه <code>ByRef</code>. وعند الاستدعاء داخل الآلة الافتراضية <code>VirtualMachine</code>، لا يتم نسخ القيمة بل يتم تمرير مرجع المتغير الأصلي (Reference Pointer)، بحيث ينعكس أي تعديل داخل الإجراء على المتغير الأصلي خارج الإجراء فوراً.
+                    </p>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="card">
+                    <h3 style="color: var(--accent-yellow); font-size: 1.15rem;">س3: كيف يتعامل المحلل المعجمي مع الحروف العربية والهمزات المختلفة؟</h3>
+                    <p style="font-size: 0.95rem; margin-top: 0.5rem;">
+                        <strong>الإجابة:</strong> يحتوي <code>Lexer.cs</code> على دالة تطبيع نصية (Normalizer) تقوم بتوحيد الهمزات (أ، إ، آ) إلى حرف (ا) وتوحيد (ة) مع (ه) و (ى) مع (ي) أثناء مقارنة الكلمات المحجوزة، مما يحمي البرنامج من الفشل في حال كتب المبرمج "إطبع" بدلاً من "اطبع" أو "إجراء" بدلاً من "اجراء".
+                    </p>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="card">
+                    <h3 style="color: var(--accent-mauve); font-size: 1.15rem;">س4: لماذا تم فصل المترجم Core كـ Class Library و CLI عن محرر WPF؟</h3>
+                    <p style="font-size: 0.95rem; margin-top: 0.5rem;">
+                        <strong>الإجابة:</strong> لتحقيق مبدأ <strong>Separation of Concerns</strong> ولتلبية شرط الدكتور بأن المترجم يجب أن يعمل مستقلاً تماماً عبر سطر الأوامر حتى لو تم حذف الواجهة الرسومية بالكامل. ويقوم المحرر باستدعاء المترجم عبر خدمة <code>CompilerService</code> كعملية خارجية <code>Process.Start</code> وتمرير الملفات كمدخلات.
+                    </p>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="card">
+                    <h3 style="color: var(--accent-cyan); font-size: 1.15rem;">س5: كيف تعمل ميزة النقر المزدوج على الخطأ في جدول الأخطاء؟</h3>
+                    <p style="font-size: 0.95rem; margin-top: 0.5rem;">
+                        <strong>الإجابة:</strong> كل كائن <code>Diagnostic</code> يحمل كائن <code>TextLocation</code> يحتوي على رقم السطر والعمود. وعند النقر المزدوج على الحدث <code>GridErrors_MouseDoubleClick</code>، يستخرج المحرر رقم السطر، ويحسب الإزاحة الحرفية (Character Index)، ثم ينفذ <code>TxtEditor.Select(charIndex, lineLength)</code> ويمنح مربع النص التركيز (Focus) فوراً.
+                    </p>
+                </div>
+
+                <!-- Question 6 -->
+                <div class="card">
+                    <h3 style="color: var(--accent-pink); font-size: 1.15rem;">س6: ما هو الكود ثلاثي العناوين (3AC) ولماذا نحتاجه قبل كود التجميع؟</h3>
+                    <p style="font-size: 0.95rem; margin-top: 0.5rem;">
+                        <strong>الإجابة:</strong> هو شفرة وسيطة خطية مستقلة عن بنية المعالج (Machine Independent)؛ حيث لا تحتوي كل تعليمة على أكثر من عملية واحدة وثلاثة عناوين كحد أقصى (معاملين ونتيجة). أهميته تكمن في تبسيط تحويل التعبيرات المتداخلة إلى أوامر أسمبلي خطية وتسهيل تحسين الكود (Code Optimization) والتفرع الشرطي.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <div>جميع الحقوق محفوظة &copy; 2026 | مشروع مترجم لغة البرمجة العربية ومحرر الأكواد الذكي</div>
+                <div>جامعة إب - كلية الحاسوب وتكنولوجيا المعلومات - إشراف أ.د. خالد الكهصة</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

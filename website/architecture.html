@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تشريح هيكلية المجلدات والأكواد المصدرية | مترجم لغة البرمجة العربية</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗂️</text></svg>">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-brand">
+                <div class="nav-logo-icon">ض</div>
+                <div>
+                    <span>مترجم العربية</span>
+                    <span class="highlight" style="font-size: 0.85rem; display: block; font-weight: 500;">Arabic Compiler & IDE</span>
+                </div>
+            </a>
+
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">🏠 الرئيسية</a></li>
+                    <li><a href="architecture.html" class="nav-link active">📂 تشريح الملفات الهندسية</a></li>
+                    <li><a href="ide-guide.html" class="nav-link">🖥️ دليل المحرر والأزرار</a></li>
+                    <li><a href="compiler-pipeline.html" class="nav-link">⚙️ مراحل المترجم الست</a></li>
+                    <li><a href="requirements.html" class="nav-link">📋 متطلبات الدكتور والمطابقة</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="ide-guide.html" class="btn btn-primary btn-sm">▶ دليل المحرر التفاعلي</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section style="padding: 3.5rem 0 2rem; background: var(--bg-surface); border-bottom: 1px solid var(--border-color);">
+        <div class="container">
+            <span class="section-tag">الهندسة المعمارية والملفات المصدرية</span>
+            <h1 style="margin-bottom: 1rem;">تشريح شجرة المجلدات ووظيفة كل ملف برمجي</h1>
+            <p style="font-size: 1.15rem; max-width: 900px;">
+                تم تنظيم المشروع وفق نمط <strong>الهندسة الطبقية النظيفة (Clean Layered Architecture)</strong> مع فصل تام للمسؤوليات (Separation of Concerns). يستعرض هذا الدليل كل ملف ومجلد ودوره الدقيق في خط إنتاج المترجم.
+            </p>
+
+            <!-- Quick Search Bar -->
+            <div style="margin-top: 1.5rem; max-width: 500px; position: relative;">
+                <input type="text" id="fileSearch" placeholder="🔍 ابحث عن أي ملف أو فئة (مثال: Lexer, Parser, VM, Cli)..." 
+                       style="width: 100%; padding: 0.75rem 1.25rem; border-radius: var(--radius-md); background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); font-family: inherit; font-size: 0.95rem;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Sections -->
+    <main class="container" style="padding: 3.5rem 1.5rem;">
+
+        <!-- 1. الشجرة الكاملة للمشروع -->
+        <section style="margin-bottom: 4rem;">
+            <div class="section-header" style="text-align: right; margin-bottom: 1.5rem;">
+                <span class="section-tag">الشجرة الهيكلية</span>
+                <h2>شجرة مجلدات وملفات الحل البرمجي بالكامل</h2>
+            </div>
+
+            <div class="tree-view">
+                <div class="tree-node"><span class="folder">📁 ArabicCompilerSolution/</span></div>
+                <div class="tree-node">&nbsp;&nbsp;├── <span class="folder">📁 src/</span> <span class="desc"># الأكواد المصدرية للمشاريع الثلاثة</span></div>
+                <div class="tree-node">&nbsp;&nbsp;│&nbsp;&nbsp;├── <span class="folder">📁 ArabicCompiler.Core/</span> <span class="desc"># [نواة المترجم] مكتبة فئات مستقلة (Class Library)</span></div>
+                <div class="tree-node">&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;├── <span class="folder">📁 Diagnostics/</span> <span class="desc"># كائنات إدارة الأخطاء والمواقع</span></div>
+                <div class="tree-node">&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;├── <span class="folder">📁 Lexing/</span> <span class="desc"># المحلل المعجمي والرموز والكلمات المفتاحية</span></div>
+                <div class="tree-node">&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;├── <span class="folder">📁 Parsing/</span> <span class="desc"># المحلل النحوي وشجرة الإعراب (AST)</span></div>
+                <div class="tree-node">&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;├── <span class="folder">📁 Symbols/</span> <span class="desc"># جداول الرموز المتداخلة ونطاقات الرؤية (Scopes)</span></div>
+                <div class="tree-node">&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;├── <span class="folder">📁 Semantic/</span> <span class="desc"># الفحص الدلالي ومطابقة الأنواع</span></div>
+                <div class="tree-node">&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;├── <span class="folder">📁 IntermediateCode/</span> <span class="desc"># توليد الكود الوسيط ثلاثي العناوين (3AC)</span></div>
+                <div class="tree-node">&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;├── <span class="folder">📁 CodeGeneration/</span> <span class="desc"># توليد كود لغة التجميع (Assembly x64)</span></div>
+                <div class="tree-node">&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;├── <span class="folder">📁 Runtime/</span> <span class="desc"># الآلة الافتراضية وبيئة التنفيذ المدمجة (VM)</span></div>
+                <div class="tree-node">&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;├── <span class="folder">📁 Models/</span> <span class="desc"># نماذج كائنات المخرجات والنتائج</span></div>
+                <div class="tree-node">&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;└── <span class="file">📄 CompilerEngine.cs</span> <span class="desc"># واجهة الفاساد الموحدة (Facade) وتصدير المخرجات</span></div>
+                <div class="tree-node">&nbsp;&nbsp;│&nbsp;&nbsp;├── <span class="folder">📁 ArabicCompiler.Cli/</span> <span class="desc"># [المترجم التنفيذي المستقل] تطبيق سطر الأوامر</span></div>
+                <div class="tree-node">&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;└── <span class="file">📄 Program.cs</span> <span class="desc"># نقطة الدخول ومعالجة المعاملات المستقلة</span></div>
+                <div class="tree-node">&nbsp;&nbsp;│&nbsp;&nbsp;└── <span class="folder">📁 ArabicLanguageEditor/</span> <span class="desc"># [المحرر الرسومي المتطور] تطبيق WPF كامل</span></div>
+                <div class="tree-node">&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="file">📄 MainWindow.xaml / .cs</span> <span class="desc"># واجهة المحرر وقوائم التحكم وألسنة التبويب</span></div>
+                <div class="tree-node">&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="folder">📁 Services/CompilerService.cs</span> <span class="desc"># خدمة استدعاء المترجم كعملية مستقلة Process</span></div>
+                <div class="tree-node">&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="folder">📁 Models/UiViewModels.cs</span> <span class="desc"># نماذج ربط بيانات الجداول مع الواجهة</span></div>
+                <div class="tree-node">&nbsp;&nbsp;├── <span class="folder">📁 docs/</span> <span class="desc"># وثائق الهندسة المعمارية والمواصفات الرسمية</span></div>
+                <div class="tree-node">&nbsp;&nbsp;├── <span class="folder">📁 examples/</span> <span class="desc"># 12 برنامجاً برمجياً عربياً متكاملاً (.arb)</span></div>
+                <div class="tree-node">&nbsp;&nbsp;├── <span class="folder">📁 tests/ArabicCompiler.Tests/</span> <span class="desc"># 40 اختباراً مؤتمتاً يغطي كافة المراحل (xUnit)</span></div>
+                <div class="tree-node">&nbsp;&nbsp;├── <span class="folder">📁 scripts/</span> <span class="desc"># سكربتات الأتمتة (build_all, run_tests, package_submission)</span></div>
+                <div class="tree-node">&nbsp;&nbsp;├── <span class="folder">📁 publish/</span> <span class="desc"># النسخ المجمعة الجاهزة للتشغيل الفوري (cli & editor)</span></div>
+                <div class="tree-node">&nbsp;&nbsp;└── <span class="folder">📁 submission_GN01/</span> <span class="desc"># حزمة التسليم الأكاديمي الرسمية للمجموعة (PREXE & PRFL)</span></div>
+            </div>
+        </section>
+
+        <!-- 2. تفصيل كل مجلد وكل ملف -->
+        <section id="core" style="margin-bottom: 4rem;">
+            <div class="section-header" style="text-align: right; margin-bottom: 1.5rem;">
+                <span class="section-tag">النواة المركزية للمترجم</span>
+                <h2>1. مشروع ArabicCompiler.Core (مكتبة فئات مستقلة)</h2>
+                <p>يمثل العقل المدبر والقلب النابض للمشروع. لا يعتمد على واجهة المستخدم إطلاقاً، ويحتوي على كافة مراحل الترجمة من الصفر.</p>
+            </div>
+
+            <div class="grid-2">
+                <!-- Diagnostic -->
+                <div class="card file-detail-card">
+                    <div class="card-header">
+                        <div>
+                            <h4>📁 Diagnostics/</h4>
+                            <span class="badge badge-danger">إدارة الأخطاء والمواقع</span>
+                        </div>
+                        <span style="font-size: 1.8rem;">🚨</span>
+                    </div>
+                    <p>المسؤول عن توحيد صيغة تسجيل الأخطاء التحذيرية والقاتلة وتحديد مواقعها بدقة:</p>
+                    <ul style="list-style: none; margin-top: 0.5rem;">
+                        <li>• <code>Diagnostic.cs</code>: يمثل كائن الخطأ ويحتوي على (رمز الخطأ، الرسالة باللغة العربية، والخطورة Error/Warning).</li>
+                        <li>• <code>TextLocation.cs</code>: يحدد رقم السطر والعمود ورقم الحرف في الكود لتمكين المحرر من الانتقال إلى موضع الخطأ مباشرة.</li>
+                    </ul>
+                </div>
+
+                <!-- Lexing -->
+                <div class="card file-detail-card">
+                    <div class="card-header">
+                        <div>
+                            <h4>📁 Lexing/</h4>
+                            <span class="badge badge-primary">المرحلة 1: التحليل المعجمي</span>
+                        </div>
+                        <span style="font-size: 1.8rem;">🔍</span>
+                    </div>
+                    <p>المسؤول عن قراءة الكود المصدري كحروف وتقسيمها إلى رموز معجمية (Tokens):</p>
+                    <ul style="list-style: none; margin-top: 0.5rem;">
+                        <li>• <code>Token.cs</code>: كائن الرمز المعجمي (نوع الرمز، النص الحرفي، وموقعه).</li>
+                        <li>• <code>TokenKind.cs</code>: تعداد ضخم يضم كافة الكلمات المحجوزة العربية (<code>برنامج</code>، <code>ثابت</code>، <code>متغير</code>، <code>صحيح</code>، <code>اذا</code>، <code>طالما</code>، <code>كرر</code>، <code>اجراء</code>...) والمعاملات والفواصل.</li>
+                        <li>• <code>Lexer.cs</code>: المحلل المعجمي الذي يقوم بتطبيع الهمزات والأحرف العربية، قراءة النصوص والأعداد، وتجاهل التعليقات.</li>
+                    </ul>
+                </div>
+
+                <!-- Parsing -->
+                <div class="card file-detail-card">
+                    <div class="card-header">
+                        <div>
+                            <h4>📁 Parsing/</h4>
+                            <span class="badge badge-success">المرحلة 2: التحليل النحوي وشجرة AST</span>
+                        </div>
+                        <span style="font-size: 1.8rem;">🌲</span>
+                    </div>
+                    <p>المسؤول عن التحقق من القواعد النحوية وبناء شجرة الإعراب المجردة:</p>
+                    <ul style="list-style: none; margin-top: 0.5rem;">
+                        <li>• <code>AstNodes.cs</code>: فئات عقد شجرة الإعراب (عقدة البرنامج، عقد الجمل، الشروط، الحلقات، الإجراءات، والتعبيرات الحسابية).</li>
+                        <li>• <code>Parser.cs</code>: محلل نحوي انحداري تعاودي LL(1) متطور يطبق قواعد EBNF الرسمية الخاصة بالدكتور بدون أي لبس نحوي.</li>
+                    </ul>
+                </div>
+
+                <!-- Symbols & Semantic -->
+                <div class="card file-detail-card">
+                    <div class="card-header">
+                        <div>
+                            <h4>📁 Symbols/ & 📁 Semantic/</h4>
+                            <span class="badge badge-warning">المرحلة 3: التحليل الدلالي وجدول الرموز</span>
+                        </div>
+                        <span style="font-size: 1.8rem;">📊</span>
+                    </div>
+                    <p>المسؤول عن إدارة مجالات الرؤية والتحقق من صحة المعاني ومطابقة الأنواع:</p>
+                    <ul style="list-style: none; margin-top: 0.5rem;">
+                        <li>• <code>Symbol.cs</code>: يمثل الكائن المعرف (اسمه، نوعه، فئته: متغير/ثابت/إجراء، وقيمته).</li>
+                        <li>• <code>SymbolTable.cs</code>: جدول الرموز الهرمي متداخل النطاقات (Scoped Symbol Table) لتمييز المتغيرات العامة عن المحلية داخل الإجراءات.</li>
+                        <li>• <code>SemanticAnalyzer.cs</code>: المحلل الدلالي الذي يرصد أخطاء: استخدام متغير غير معرف، تكرار التعريف، تعديل الثوابت، وتضارب الأنواع.</li>
+                    </ul>
+                </div>
+
+                <!-- IntermediateCode -->
+                <div class="card file-detail-card">
+                    <div class="card-header">
+                        <div>
+                            <h4>📁 IntermediateCode/</h4>
+                            <span class="badge badge-purple">المرحلة 4: الكود ثلاثي العناوين (3AC)</span>
+                        </div>
+                        <span style="font-size: 1.8rem;">⚙️</span>
+                    </div>
+                    <p>المسؤول عن تفكيك التعبيرات المعقدة وتحويلها إلى شفرة وسيطة مستقلة عن المعالج:</p>
+                    <ul style="list-style: none; margin-top: 0.5rem;">
+                        <li>• <code>ThreeAddressInstruction.cs</code>: يمثل تعليمة العنوان الثلاثي (العملية، المعامل الأول، المعامل الثاني، والنتيجة).</li>
+                        <li>• <code>ThreeAddressCodeGenerator.cs</code>: يقوم بتوليد أسماء المتغيرات المؤقتة (<code>ت1</code>، <code>ت2</code>...) وعناوين التفرع والقفز الشرطي لحلقات <code>طالما</code> و <code>كرر</code> و <code>اذا</code>.</li>
+                    </ul>
+                </div>
+
+                <!-- CodeGeneration & Runtime -->
+                <div class="card file-detail-card">
+                    <div class="card-header">
+                        <div>
+                            <h4>📁 CodeGeneration/ & 📁 Runtime/</h4>
+                            <span class="badge badge-primary">المرحلتان 5 و 6: Assembly والآلة الافتراضية</span>
+                        </div>
+                        <span style="font-size: 1.8rem;">💻</span>
+                    </div>
+                    <p>المسؤولان عن توليد شفرة لغة التجميع وتشغيل البرنامج الفعلي في الذاكرة:</p>
+                    <ul style="list-style: none; margin-top: 0.5rem;">
+                        <li>• <code>AssemblyGenerator.cs</code>: يولد كود لغة التجميع x64/ArabicVM بأقسام البيانات <code>.data</code> والتعليمات <code>.text</code> وأوامر المسجلات (RAX, RCX, RDX).</li>
+                        <li>• <code>VirtualMachine.cs</code>: آلة افتراضية مدمجة تنفذ تعليمات 3AC في الذاكرة وتحاكي عمل المعالج وتوفر مخرجات وحدة التحكم (Console).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- CompilerEngine.cs Card -->
+            <div class="card file-detail-card" style="margin-top: 1.5rem; border-color: var(--accent-blue);">
+                <div class="card-header">
+                    <div>
+                        <h3>📄 CompilerEngine.cs (واجهة الفاساد المركزية)</h3>
+                        <span class="badge badge-success">نقطة الاتصال الموحدة Facade Pattern</span>
+                    </div>
+                    <span style="font-size: 2rem;">🌟</span>
+                </div>
+                <p>الملف الأكثر أهمية في النواة؛ حيث يجمع مراحل المترجم الست في دالة واحدة سهلة الاستدعاء <code>Compile(sourceCode)</code>، كما يتولى تصدير ملفات المخرجات العشرة تلقائياً:</p>
+                <div class="grid-3" style="margin-top: 1rem;">
+                    <div style="background: rgba(0,0,0,0.3); padding: 0.85rem; border-radius: 6px;">
+                        <strong style="color: var(--accent-blue);">1. tokens.json</strong><br>
+                        <small>قائمة الرموز المعجمية الكاملة</small>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.3); padding: 0.85rem; border-radius: 6px;">
+                        <strong style="color: var(--accent-green);">2. parse-tree.txt</strong><br>
+                        <small>شجرة الإعراب الهرمية النصية</small>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.3); padding: 0.85rem; border-radius: 6px;">
+                        <strong style="color: var(--accent-yellow);">3. symbols.json</strong><br>
+                        <small>جدول الرموز بجميع النطاقات</small>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.3); padding: 0.85rem; border-radius: 6px;">
+                        <strong style="color: var(--accent-mauve);">4. three-address-code.txt</strong><br>
+                        <small>الشفرة الوسيطة ثلاثية العناوين</small>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.3); padding: 0.85rem; border-radius: 6px;">
+                        <strong style="color: var(--accent-pink);">5. assembly-code.asm</strong><br>
+                        <small>كود لغة التجميع المتكامل</small>
+                    </div>
+                    <div style="background: rgba(0,0,0,0.3); padding: 0.85rem; border-radius: 6px;">
+                        <strong style="color: var(--accent-cyan);">6. output.txt</strong><br>
+                        <small>مخرجات التشغيل الفعلي في VM</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. مشروع سطر الأوامر والمحرر -->
+        <section id="cli" style="margin-bottom: 4rem;">
+            <div class="section-header" style="text-align: right; margin-bottom: 1.5rem;">
+                <span class="section-tag">التطبيقات التنفيذية</span>
+                <h2>2. مشروع المترجم المستقل (CLI) ومحرر الأكواد (Editor)</h2>
+            </div>
+
+            <div class="grid-2">
+                <div class="card file-detail-card">
+                    <div class="card-header">
+                        <div>
+                            <h4>📁 ArabicCompiler.Cli/</h4>
+                            <span class="badge badge-primary">المترجم المستقل Command-Line</span>
+                        </div>
+                        <span style="font-size: 1.8rem;">⌨️</span>
+                    </div>
+                    <p>تطبيق مستقل تماماً بصيغة <code>.exe</code> لتشغيل المترجم من الدوس أو الطرفية بدون الحاجة لبيئة التطوير الرسومية:</p>
+                    <ul style="list-style: none; margin-top: 0.5rem;">
+                        <li>• <code>Program.cs</code>: نقطة الدخول؛ يعالج مسار ملف الكود، وسائط <code>--run</code> للتشغيل، <code>--out</code> لتحديد مجلد المخرجات، و <code>--input-data</code> لتمرير المدخلات مسبقاً.</li>
+                    </ul>
+                    <div class="code-block" style="margin-top: 1rem;">
+                        <div class="code-content" style="padding: 0.75rem; font-size: 0.85rem;">
+                            <code>.\ArabicCompiler.Cli.exe "01_طباعة_بسيطة.arb" --run</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card file-detail-card">
+                    <div class="card-header">
+                        <div>
+                            <h4>📁 ArabicLanguageEditor/</h4>
+                            <span class="badge badge-success">محرر الأكواد المرئي WPF IDE</span>
+                        </div>
+                        <span style="font-size: 1.8rem;">🖥️</span>
+                    </div>
+                    <p>بيئة تحرير متطورة تدعم الكتابة العربية من اليمين لليسار (RTL) مع ربط تفاعلي:</p>
+                    <ul style="list-style: none; margin-top: 0.5rem;">
+                        <li>• <code>MainWindow.xaml / .cs</code>: تصميم النافذة، شريط القوائم، شريط الأدوات، محرر الكود، وترقيم الأسطر، والتبويبات الـ 8.</li>
+                        <li>• <code>Services/CompilerService.cs</code>: الخدمة المسؤولة عن استدعاء المترجم كعملية مستقلة (Process) وقراءة ملفات النتائج وتحديث الواجهة.</li>
+                        <li>• <code>Models/UiViewModels.cs</code>: كائنات الربط (DataBinding) لعرض الجداول (الرموز، الرموز المعجمية، والأخطاء).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. ملفات التوثيق والأمثلة والاختبارات -->
+        <section style="margin-bottom: 4rem;">
+            <div class="section-header" style="text-align: right; margin-bottom: 1.5rem;">
+                <span class="section-tag">الملفات المساعدة والضمان الأكاديمي</span>
+                <h2>3. الوثائق، الاختبارات، والأمثلة التجريبية</h2>
+            </div>
+
+            <div class="grid-3">
+                <div class="card file-detail-card">
+                    <h4>📁 docs/ (المستندات)</h4>
+                    <p>تحتوي على التوثيق الهندسي والأكاديمي الكامل:</p>
+                    <ul style="list-style: none; font-size: 0.9rem;">
+                        <li>• <code>ARCHITECTURE.md</code>: وثيقة التصميم المعماري والأنماط.</li>
+                        <li>• <code>GRAMMAR.md</code>: القواعد النحوية الرسمية بلغة EBNF.</li>
+                        <li>• <code>USER_MANUAL.md</code>: دليل التشغيل واستخدام المحرر.</li>
+                        <li>• <code>PROJECT_REQUIREMENTS_TRACEABILITY.md</code>: مصفوفة مطابقة المتطلبات الجامعية.</li>
+                    </ul>
+                </div>
+
+                <div class="card file-detail-card">
+                    <h4>📁 examples/ (البرامج الـ 12)</h4>
+                    <p>12 برنامجاً برمجياً عربياً متكاملاً بصيغة <code>.arb</code> تغطي كافة قواعد اللغة:</p>
+                    <ul style="list-style: none; font-size: 0.9rem;">
+                        <li>• طباعة، متغيرات، أسس <code>^</code>، وعمليات منطقية.</li>
+                        <li>• شروط متداخلة وحلقات <code>طالما</code> و <code>كرر</code>.</li>
+                        <li>• إجراءات وتمرير بالمرجع <code>بالمرجع</code>.</li>
+                        <li>• أنواع مركبة: مصفوفات وسجلات.</li>
+                        <li>• أمثلة رصد الأخطاء النحوية والدلالية.</li>
+                    </ul>
+                </div>
+
+                <div class="card file-detail-card">
+                    <h4>📁 scripts/ & tests/</h4>
+                    <p>ضمان الجودة وأتمتة النشر والتسليم:</p>
+                    <ul style="list-style: none; font-size: 0.9rem;">
+                        <li>• <code>run_tests.ps1</code>: تشغيل حزمة الـ 40 اختباراً في xUnit.</li>
+                        <li>• <code>build_all.ps1</code>: بناء الحل بالكامل ونشره في <code>publish/</code>.</li>
+                        <li>• <code>package_submission.ps1</code>: حزم ملفات التسليم <code>PREXE-GN</code> و <code>PRFL-GN</code> وفق تعليمات الدكتور.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <div>جميع الحقوق محفوظة &copy; 2026 | مشروع مترجم لغة البرمجة العربية ومحرر الأكواد الذكي</div>
+                <div>جامعة إب - كلية الحاسوب وتكنولوجيا المعلومات - إشراف أ.د. خالد الكهصة</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

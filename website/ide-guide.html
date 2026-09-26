@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل واجهة المحرر والأزرار بالتفصيل | Arabic Language Editor</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖥️</text></svg>">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-brand">
+                <div class="nav-logo-icon">ض</div>
+                <div>
+                    <span>مترجم العربية</span>
+                    <span class="highlight" style="font-size: 0.85rem; display: block; font-weight: 500;">Arabic Compiler & IDE</span>
+                </div>
+            </a>
+
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">🏠 الرئيسية</a></li>
+                    <li><a href="architecture.html" class="nav-link">📂 تشريح الملفات الهندسية</a></li>
+                    <li><a href="ide-guide.html" class="nav-link active">🖥️ دليل المحرر والأزرار</a></li>
+                    <li><a href="compiler-pipeline.html" class="nav-link">⚙️ مراحل المترجم الست</a></li>
+                    <li><a href="requirements.html" class="nav-link">📋 متطلبات الدكتور والمطابقة</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="#mockup" class="btn btn-primary btn-sm">جرب المحرر التفاعلي ↓</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section style="padding: 3.5rem 0 2rem; background: var(--bg-surface); border-bottom: 1px solid var(--border-color);">
+        <div class="container">
+            <span class="section-tag">بيئة التطوير الرسومية الذكية</span>
+            <h1 style="margin-bottom: 1rem;">الدليل الشامل لواجهة المحرر وعمل كل زر وقائمة</h1>
+            <p style="font-size: 1.15rem; max-width: 900px;">
+                تم تصميم محرر الأكواد <strong>ArabicLanguageEditor</strong> بتقنية WPF وفق أحدث المعايير الهندسية ليوفر تجربة كتابة عربية فطرية (RTL) ويعرض مخرجات مراحل المترجم الست في تبويبات منظمة وتفاعلية.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content Container -->
+    <main class="container" style="padding: 3.5rem 1.5rem;">
+
+        <!-- 1. المحاكي المرئي لواجهة المحرر -->
+        <section id="mockup" style="margin-bottom: 4rem;">
+            <div class="section-header" style="text-align: right; margin-bottom: 1.5rem;">
+                <span class="section-tag">المحرر المرئي التفاعلي</span>
+                <h2>واجهة المحرر كما تظهر في البرنامج التنفيذي الحقيقي</h2>
+                <p>اضغط على التبويبات المختلفة في الجانب الأيسر لمشاهدة كيفية توزيع مخرجات الترجمة</p>
+            </div>
+
+            <div class="ide-mockup">
+                <!-- Top Windows Title Bar -->
+                <div class="ide-top-bar">
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: var(--accent-blue);">⚡</span>
+                        <span>محرر لغة البرمجة العربية - Arabic Language Editor (Release 1.0)</span>
+                    </div>
+                    <div class="code-dots">
+                        <div class="code-dot green"></div>
+                        <div class="code-dot yellow"></div>
+                        <div class="code-dot red"></div>
+                    </div>
+                </div>
+
+                <!-- 1. Menu Bar -->
+                <div class="ide-menu-bar">
+                    <div class="ide-menu-item" onclick="showInfoModal('قائمة ملف', 'تحتوي على أوامر: جديد (Ctrl+N)، فتح (Ctrl+O)، حفظ (Ctrl+S)، حفظ باسم (Ctrl+Shift+S)، وخروج.')">ملف ▾</div>
+                    <div class="ide-menu-item" onclick="showInfoModal('قائمة تحرير', 'تحتوي على أوامر: تراجع، إعادة، قص، نسخ، لصق، وتحديد الكل.')">تحرير ▾</div>
+                    <div class="ide-menu-item" onclick="showInfoModal('قائمة ترجمة', 'تحتوي على: ترجمة الكود (F6)، فتح مجلد المخرجات، ومسح النتائج.')">ترجمة ▾</div>
+                    <div class="ide-menu-item" onclick="showInfoModal('قائمة تشغيل', 'تحتوي على: تشغيل البرنامج (F5)، وتنفيذ مع إرسال المدخلات.')">تشغيل ▾</div>
+                    <div class="ide-menu-item" onclick="showInfoModal('قائمة مساعدة', 'تحتوي على: دليل الاستخدام والتشغيل، قواعد لغة البرمجة العربية، وحول المحرر.')">مساعدة ▾</div>
+                </div>
+
+                <!-- 2. Action Toolbar -->
+                <div class="ide-toolbar">
+                    <div class="ide-toolbar-group">
+                        <button class="ide-btn" onclick="showInfoModal('زر جديد', 'ينشئ ملف كود عربي جديد فارغ (Ctrl+N)')">📄 جديد</button>
+                        <button class="ide-btn" onclick="showInfoModal('زر فتح', 'يفتح ملف كود عربي (.arb) من جهازك (Ctrl+O)')">📂 فتح</button>
+                        <button class="ide-btn" onclick="showInfoModal('زر حفظ', 'يحفظ الملف الحالي فوراً (Ctrl+S)')">💾 حفظ</button>
+                        <button class="ide-btn" onclick="showInfoModal('زر حفظ باسم', 'يحفظ الملف باسم ومسار جديد (Ctrl+Shift+S)')">💾 حفظ باسم</button>
+                        <span style="color: var(--border-hover); margin: 0 4px;">|</span>
+                        <button class="ide-btn run" onclick="showInfoModal('زر تشغيل (F5)', 'يترجم الكود وينفذه مباشرة بالآلة الافتراضية ويعرض الناتج في شاشة المخرجات!')">▶ تشغيل (F5)</button>
+                        <button class="ide-btn compile" onclick="showInfoModal('زر ترجمة (F6)', 'يبني الكود ويولد الرموز المعجمية والشجرة والجدول و 3AC و Assembly بدون تشغيل.')">⚙ ترجمة (F6)</button>
+                        <button class="ide-btn" onclick="showInfoModal('زر اتجاه النص', 'يبدل اتجاه الكتابة بين اليمين واليسار (RTL/LTR).')">⇄ اتجاه النص</button>
+                        <button class="ide-btn" onclick="showInfoModal('زر مسح', 'يمسح نتائج الترجمة السابقة لتنظيف الشاشة.')">🧹 مسح</button>
+                        <button class="ide-btn" onclick="showInfoModal('مجلد المخرجات', 'يفتح المجلد الفعلي الذي يحتوي على ملفات JSON و ASM و TXT في الويندوز.')">📁 مجلد المخرجات</button>
+                    </div>
+
+                    <div class="ide-toolbar-group">
+                        <span style="font-size: 0.85rem; color: var(--text-secondary);">أمثلة جاهزة للمشروع:</span>
+                        <select style="background: var(--bg-accent); border: 1px solid var(--border-color); color: var(--text-primary); padding: 0.3rem 0.6rem; border-radius: 4px; font-family: inherit; font-size: 0.85rem;">
+                            <option>01_طباعة_بسيطة.arb</option>
+                            <option>02_متغيرات_وحساب.arb</option>
+                            <option>03_عمليات_حسابية_واسس.arb</option>
+                            <option>04_عمليات_منطقية.arb</option>
+                            <option>05_جمل_شرطية.arb</option>
+                            <option>06_حلقة_طالما.arb</option>
+                            <option>07_حلقة_اعد_حتى.arb</option>
+                            <option>08_حلقة_كرر_عددية.arb</option>
+                            <option>09_اجراء_ومعاملات.arb</option>
+                            <option>10_انواع_مركبة.arb</option>
+                            <option>11_خطا_نحوي.arb</option>
+                            <option>12_خطا_دلالي.arb</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 3. Main Workspace Area -->
+                <div class="ide-workspace">
+                    <!-- Left: Code Editor -->
+                    <div class="ide-editor-panel">
+                        <div class="ide-editor-header">
+                            <span>02_متغيرات_وحساب.arb</span>
+                            <span style="color: var(--text-muted);">السطر: 7 | العمود: 12</span>
+                        </div>
+                        <div class="ide-editor-body">
+                            <div class="ide-lines">
+                                1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11
+                            </div>
+                            <div class="ide-code"><span class="code-keyword">برنامج</span> حساب_الزيادة؛
+{
+    <span class="code-keyword">ثابت</span> زيادة = <span class="code-number">5</span>؛
+    <span class="code-keyword">متغير</span> س، حاصل: <span class="code-type">صحيح</span>؛
+
+    س = <span class="code-number">10</span>؛
+    حاصل = س + زيادة؛
+
+    <span class="code-keyword">اطبع</span>(<span class="code-string">"النتيجة النهائية ="</span>)؛
+    <span class="code-keyword">اطبع</span>(حاصل)؛
+}.</div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Tabbed Results Panel -->
+                    <div class="ide-tabs-panel">
+                        <div class="ide-tab-headers">
+                            <div class="ide-tab-header active" data-tab="tab-tokens">الرموز (Tokens)</div>
+                            <div class="ide-tab-header" data-tab="tab-ast">شجرة الإعراب (AST)</div>
+                            <div class="ide-tab-header" data-tab="tab-symbols">جدول الرموز</div>
+                            <div class="ide-tab-header" data-tab="tab-semantic">التحليل الدلالي</div>
+                            <div class="ide-tab-header" data-tab="tab-3ac">الشفرة الوسيطة (3AC)</div>
+                            <div class="ide-tab-header" data-tab="tab-assembly">كود التجميع (Assembly)</div>
+                            <div class="ide-tab-header" data-tab="tab-errors">الأخطاء (0)</div>
+                            <div class="ide-tab-header" data-tab="tab-output">المخرجات (Output)</div>
+                        </div>
+
+                        <div class="ide-tab-content">
+                            <!-- Tab 1: Tokens -->
+                            <div id="tab-tokens" class="ide-tab-pane">
+                                <table class="data-table" style="margin: 0; font-size: 0.85rem;">
+                                    <thead>
+                                        <tr><th>#</th><th>نوع الرمز (Kind)</th><th>النص (Lexeme)</th><th>السطر</th><th>العمود</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>1</td><td>ProgramKeyword</td><td>برنامج</td><td>1</td><td>1</td></tr>
+                                        <tr><td>2</td><td>IdentifierToken</td><td>حساب_الزيادة</td><td>1</td><td>8</td></tr>
+                                        <tr><td>3</td><td>SemicolonToken</td><td>؛</td><td>1</td><td>20</td></tr>
+                                        <tr><td>4</td><td>ConstantKeyword</td><td>ثابت</td><td>3</td><td>5</td></tr>
+                                        <tr><td>5</td><td>IdentifierToken</td><td>زيادة</td><td>3</td><td>10</td></tr>
+                                        <tr><td>6</td><td>EqualsToken</td><td>=</td><td>3</td><td>16</td></tr>
+                                        <tr><td>7</td><td>IntegerLiteralToken</td><td>5</td><td>3</td><td>18</td></tr>
+                                        <tr><td>8</td><td>VariableKeyword</td><td>متغير</td><td>4</td><td>5</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Tab 2: AST -->
+                            <div id="tab-ast" class="ide-tab-pane" style="display: none;">
+                                <pre style="color: var(--accent-green); font-size: 0.85rem; line-height: 1.6;">ProgramNode: حساب_الزيادة
+  ├── Declarations (2)
+  │   ├── ConstantDeclaration: زيادة = 5 (صحيح)
+  │   └── VariableDeclaration: س، حاصل: صحيح
+  └── Body: BlockStatement
+      ├── [1] AssignmentStatement: س = 10
+      ├── [2] AssignmentStatement: حاصل = (س + زيادة)
+      ├── [3] PrintStatement: "النتيجة النهائية ="
+      └── [4] PrintStatement: حاصل</pre>
+                            </div>
+
+                            <!-- Tab 3: Symbols -->
+                            <div id="tab-symbols" class="ide-tab-pane" style="display: none;">
+                                <table class="data-table" style="margin: 0; font-size: 0.85rem;">
+                                    <thead>
+                                        <tr><th>الاسم</th><th>الفئة</th><th>نوع البيانات</th><th>النطاق (Scope)</th><th>السطر</th><th>القيمة</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>زيادة</td><td><span class="badge badge-purple">ثابت</span></td><td>صحيح</td><td>عام (Global)</td><td>3</td><td>5</td></tr>
+                                        <tr><td>س</td><td><span class="badge badge-primary">متغير</span></td><td>صحيح</td><td>عام (Global)</td><td>4</td><td>10</td></tr>
+                                        <tr><td>حاصل</td><td><span class="badge badge-primary">متغير</span></td><td>صحيح</td><td>عام (Global)</td><td>4</td><td>15</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Tab 4: Semantic -->
+                            <div id="tab-semantic" class="ide-tab-pane" style="display: none;">
+                                <div style="background: rgba(166, 227, 161, 0.1); border: 1px solid rgba(166, 227, 161, 0.3); padding: 1rem; border-radius: 8px; color: var(--accent-green);">
+                                    ✓ نجح التحليل الدلالي بالكامل بنسبة 100%.<br>
+                                    ✓ تم التحقق من سلامة كافة مجالات الرؤية (Scopes).<br>
+                                    ✓ جميع المتغيرات معلنة ومصرح عنها قبل الاستخدام.<br>
+                                    ✓ لا توجد أي محاولات لتعديل الثوابت.<br>
+                                    ✓ كافة أنواع التعبيرات الحسابية متطابقة ومتوافقة.
+                                </div>
+                            </div>
+
+                            <!-- Tab 5: 3AC -->
+                            <div id="tab-3ac" class="ide-tab-pane" style="display: none;">
+                                <pre style="color: var(--accent-blue); font-size: 0.9rem; line-height: 1.8;">1: س = 10
+2: ت1 = س + 5
+3: حاصل = ت1
+4: PARAM "النتيجة النهائية ="
+5: CALL اطبع, 1
+6: PARAM حاصل
+7: CALL اطبع, 1
+8: HALT</pre>
+                            </div>
+
+                            <!-- Tab 6: Assembly -->
+                            <div id="tab-assembly" class="ide-tab-pane" style="display: none;">
+                                <pre style="color: var(--accent-mauve); font-size: 0.85rem; line-height: 1.6;">.data
+    var_س dq 0
+    var_حاصل dq 0
+    const_زيادة dq 5
+    str_0 db "النتيجة النهائية =", 0
+
+.text
+global _start
+_start:
+    mov qword [var_س], 10
+    mov rax, [var_س]
+    add rax, 5
+    mov [var_حاصل], rax
+    lea rcx, [str_0]
+    call print_string
+    mov rcx, [var_حاصل]
+    call print_int
+    mov rax, 60
+    syscall</pre>
+                            </div>
+
+                            <!-- Tab 7: Errors -->
+                            <div id="tab-errors" class="ide-tab-pane" style="display: none;">
+                                <div style="text-align: center; padding: 2rem; color: var(--accent-green);">
+                                    <span style="font-size: 2rem;">✅</span><br>
+                                    <strong>لا توجد أي أخطاء نحوية أو دلالية! الكود سليم وجاهز للتنفيذ.</strong><br>
+                                    <small style="color: var(--text-muted);">(عند وجود أخطاء، سيظهر رقم السطر والعمود، ويمكنك النقر المزدوج عليه للانتقال إلى مكانه فوراً)</small>
+                                </div>
+                            </div>
+
+                            <!-- Tab 8: Output -->
+                            <div id="tab-output" class="ide-tab-pane" style="display: none;">
+                                <div style="background: #000; padding: 1rem; border-radius: 6px; color: var(--accent-pink); font-family: 'Fira Code', monospace; min-height: 180px;">
+النتيجة النهائية =<br>
+15<br><br>
+<span style="color: var(--accent-green);">[تم إنهاء البرنامج بنجاح بدون أخطاء - Exit Code: 0]</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Status Bar -->
+                <div style="background: var(--bg-darker); padding: 0.45rem 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted);">
+                    <div>الحالة: <span style="color: var(--accent-green); font-weight: bold;">تمت الترجمة والتشغيل بنجاح!</span> | الأخطاء: <span style="color: var(--accent-blue);">0</span></div>
+                    <div>ArabicCompiler v1.0 | IBB CS351 - إشراف أ.د. خالد الكهصة</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. شرح تفصيلي لشريط القوائم العلوي -->
+        <section style="margin-bottom: 4rem;">
+            <div class="section-header" style="text-align: right; margin-bottom: 1.5rem;">
+                <span class="section-tag">شريط القوائم العلوي</span>
+                <h2>شرح كل قائمة وكل زر داخلها بالتفصيل الممل</h2>
+            </div>
+
+            <div class="grid-2">
+                <!-- قائمة ملف -->
+                <div class="card">
+                    <h3 style="color: var(--accent-blue); display: flex; align-items: center; gap: 0.5rem;">
+                        <span>📁</span> قائمة «ملف» (File Menu)
+                    </h3>
+                    <table class="data-table" style="font-size: 0.85rem; margin-top: 1rem;">
+                        <thead>
+                            <tr><th>اسم الزر</th><th>الاختصار</th><th>الوظيفة البرمجية</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>جديد</strong></td><td><code>Ctrl+N</code></td><td>إنشاء ملف كود عربي جديد وتفريغ مسار الملف الحالي وتصفير العدادات.</td></tr>
+                            <tr><td><strong>فتح</strong></td><td><code>Ctrl+O</code></td><td>فتح نافذة حوار Windows لاختيار أي ملف كود مصدري بصيغة <code>.arb</code>.</td></tr>
+                            <tr><td><strong>حفظ</strong></td><td><code>Ctrl+S</code></td><td>حفظ الكود المكتوب في الملف المفتوح حالياً بتنسيق UTF-8 العربي.</td></tr>
+                            <tr><td><strong>حفظ باسم...</strong></td><td><code>Ctrl+Shift+S</code></td><td>حفظ الكود الحالي في ملف جديد واختيار مساره واسمه.</td></tr>
+                            <tr><td><strong>خروج</strong></td><td><code>Alt+F4</code></td><td>إغلاق برنامج المحرر وإنهاء العملية.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- قائمة تحرير -->
+                <div class="card">
+                    <h3 style="color: var(--accent-mauve); display: flex; align-items: center; gap: 0.5rem;">
+                        <span>✏️</span> قائمة «تحرير» (Edit Menu)
+                    </h3>
+                    <table class="data-table" style="font-size: 0.85rem; margin-top: 1rem;">
+                        <thead>
+                            <tr><th>اسم الزر</th><th>الاختصار</th><th>الوظيفة البرمجية</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>تراجع</strong></td><td><code>Ctrl+Z</code></td><td>التراجع عن آخر عملية كتابة أو تعديل في المحرر.</td></tr>
+                            <tr><td><strong>إعادة</strong></td><td><code>Ctrl+Y</code></td><td>إعادة تطبيق التعديل الذي تم التراجع عنه.</td></tr>
+                            <tr><td><strong>قص / نسخ / لصق</strong></td><td><code>Ctrl+X/C/V</code></td><td>عمليات الحافظة القياسية لمعالجة النصوص البرمجية.</td></tr>
+                            <tr><td><strong>تحديد الكل</strong></td><td><code>Ctrl+A</code></td><td>تحديد وتظليل كامل النص البرمجي في المحرر.</td></tr>
+                            <tr><td><strong>مسح الكود</strong></td><td>-</td><td>تفريغ نص المحرر بالكامل للبدء من جديد.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- قائمة ترجمة -->
+                <div class="card">
+                    <h3 style="color: var(--accent-yellow); display: flex; align-items: center; gap: 0.5rem;">
+                        <span>⚙️</span> قائمة «ترجمة» (Compile Menu)
+                    </h3>
+                    <table class="data-table" style="font-size: 0.85rem; margin-top: 1rem;">
+                        <thead>
+                            <tr><th>اسم الزر</th><th>الاختصار</th><th>الوظيفة البرمجية</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>ترجمة الكود (بناء)</strong></td><td><code>F6</code></td><td>تشغيل كافة مراحل المترجم وتوليد الرموز وشجرة AST والكود ثلاثي العناوين بدون تشغيله.</td></tr>
+                            <tr><td><strong>فتح مجلد المخرجات</strong></td><td>-</td><td>فتح المجلد الفعلي <code>OutputArtifacts</code> على القرص في Windows Explorer لمشاهدة ملفات JSON و ASM.</td></tr>
+                            <tr><td><strong>مسح نتائج الترجمة</strong></td><td>-</td><td>تفريغ جميع ألسنة التبويب وجدول الأخطاء وتنظيف شاشة المحرر.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- قائمة تشغيل ومساعدة -->
+                <div class="card">
+                    <h3 style="color: var(--accent-green); display: flex; align-items: center; gap: 0.5rem;">
+                        <span>▶</span> قائمتي «تشغيل» و «مساعدة»
+                    </h3>
+                    <table class="data-table" style="font-size: 0.85rem; margin-top: 1rem;">
+                        <thead>
+                            <tr><th>اسم الزر</th><th>الاختصار</th><th>الوظيفة البرمجية</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>تشغيل البرنامج</strong></td><td><code>F5</code></td><td>ترجمة الكود وتشغيله فوراً بالآلة الافتراضية والتبديل التلقائي لتبويب المخرجات.</td></tr>
+                            <tr><td><strong>تنفيذ مع إرسال المدخلات</strong></td><td>-</td><td>تشغيل البرنامج مع تمرير القيم المكتوبة في حقل الإدخال السفلي لأمر <code>اقرأ</code>.</td></tr>
+                            <tr><td><strong>دليل الاستخدام والتشغيل</strong></td><td>-</td><td>عرض نافذة إرشادية سريعة بالمفاتيح وكيفية الاستخدام.</td></tr>
+                            <tr><td><strong>قواعد لغة البرمجة العربية</strong></td><td>-</td><td>عرض نافذة بالقواعد النحوية الرسمية EBNF للغة العربية.</td></tr>
+                            <tr><td><strong>حول Arabic Compiler Editor</strong></td><td>-</td><td>عرض بطاقة تعريفية بالمشروع وإشراف أ.د. خالد الكهصة.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. شرح التبويبات الثمانية -->
+        <section style="margin-bottom: 4rem;">
+            <div class="section-header" style="text-align: right; margin-bottom: 1.5rem;">
+                <span class="section-tag">ألسنة تبويب المخرجات</span>
+                <h2>شرح التبويبات الـ 8 وكيفية قراءة نتائج الترجمة</h2>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h4 style="color: var(--accent-blue);">1. تبويب الرموز (Tokens)</h4>
+                    <p>يعرض جدولاً تفاعلياً بكل رمز معجمي تم استخراجه بواسطة <code>Lexer</code>، ويشمل: رقم الرمز المعجمي، نوع الرمز البرمجي (Kind)، النص الحرفي المقروء (Lexeme)، ورقم السطر والعمود.</p>
+                </div>
+
+                <div class="card">
+                    <h4 style="color: var(--accent-green);">2. تبويب شجرة الإعراب (AST)</h4>
+                    <p>يعرض الشجرة النحوية الهرمية التي بناها المحلل النحوي <code>Parser</code>، موضحاً بنية البرنامج، عقد التصريحات (متغيرات وثوابت)، وعقد الجمل (شروط، حلقات، وإجراءات).</p>
+                </div>
+
+                <div class="card">
+                    <h4 style="color: var(--accent-yellow);">3. تبويب جدول الرموز (Symbols)</h4>
+                    <p>يعرض جدولاً بكافة المعرفات المصرح عنها في البرنامج، ونوع كل متغير، وفئته (متغير، ثابت، إجراء، نوع مركب)، ونطاق الرؤية الخاص به (عام Global أو محلي Local)، وقيمته الابتدائية.</p>
+                </div>
+
+                <div class="card">
+                    <h4 style="color: var(--accent-mauve);">4. تبويب التحليل الدلالي (Semantic)</h4>
+                    <p>يعرض تقرير الفحص الدلالي الشامل وتأكيد خلو البرنامج من تعارض الأنواع، وحماية الثوابت من محاولات التعديل، والتحقق من عدم استخدام أي متغير قبل تعريفه.</p>
+                </div>
+
+                <div class="card">
+                    <h4 style="color: var(--accent-cyan);">5. تبويب الشفرة الوسيطة (3AC)</h4>
+                    <p>يعرض الكود ثلاثي العناوين (Three-Address Code) بتنسيق خطي مبسط؛ حيث يتم تفكيك العمليات المعقدة إلى تعليمات وسيطة مع متغيرات مؤقتة (<code>ت1</code>، <code>ت2</code>) وعناوين قفز وتفرع.</p>
+                </div>
+
+                <div class="card">
+                    <h4 style="color: var(--accent-peach);">6. تبويب كود التجميع (Assembly)</h4>
+                    <p>يعرض الشفرة المجمعة للغة التجميع x64/ArabicVM مقسمة إلى قسم البيانات <code>.data</code> لتخزين المتغيرات والنصوص، وقسم التعليمات <code>.text</code> الذي يحوي أوامر المعالج.</p>
+                </div>
+
+                <div class="card">
+                    <h4 style="color: var(--accent-red);">7. تبويب الأخطاء (Errors Tab)</h4>
+                    <p>يعرض جدولاً دقيقاً بأي أخطاء نحوية أو دلالية. <strong>ميزة ذكية:</strong> عند النقر المزدوج (Double Click) على أي سطر في هذا الجدول، ينقلك المحرر تلقائياً إلى السطر المحدد في كودك المصدري لتصحيحه فوراً!</p>
+                </div>
+
+                <div class="card">
+                    <h4 style="color: var(--accent-pink);">8. تبويب مخرجات التشغيل (Output)</h4>
+                    <p>يمثل شاشة وحدة التحكم (Console Terminal)؛ حيث يعرض ناتج طباعة جمل <code>اطبع(...)</code>، ويحتوي على شريط سفلي لكتابة المدخلات في حال احتوى الكود على تعليمة <code>اقرأ(...)</code>.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <div>جميع الحقوق محفوظة &copy; 2026 | مشروع مترجم لغة البرمجة العربية ومحرر الأكواد الذكي</div>
+                <div>جامعة إب - كلية الحاسوب وتكنولوجيا المعلومات - إشراف أ.د. خالد الكهصة</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

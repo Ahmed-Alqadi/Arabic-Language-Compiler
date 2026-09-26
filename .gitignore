@@ -1,0 +1,63 @@
+# Protect proprietary source code from public GitHub download
+src/
+tests/
+*.sln
+*.slnx
+
+# .NET build artifacts
+bin/
+obj/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+
+# Build & publish outputs
+publish/
+OutputArtifacts/
+ArabicCompiler_Package/
+submission_*/
+temp_*/
+test_*/
+examples/out/
+
+# Binary executables and archives
+*.dll
+*.pdb
+*.rar
+*.zip
+Setup_ArabicIDE.exe
+تثبيت_البرنامج.exe
+
+# Allow official standalone installer & icons
+!Setup_ArabicCompiler.exe
+!app.ico
+
+# Temporary test and cover artifacts
+رفع_المشروع_الى_جيت_هاب.bat
+card_*.png
+*_preview.png
+*_test.png
+*_v3.png
+font_*.png
+text_opt*.png
+page_1*.png
+test_*.png
+test_*.py
+test_arabic.pdf
+*_backup.pdf
+installer_log.txt
+
+# IDE / Editor files
+.vs/
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store

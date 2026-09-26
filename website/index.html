@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مترجم لغة البرمجة العربية | البوابة الرسمية والدليل التوثيقي الشامل</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-brand">
+                <div class="nav-logo-icon">ض</div>
+                <div>
+                    <span>مترجم العربية</span>
+                    <span class="highlight" style="font-size: 0.85rem; display: block; font-weight: 500;">Arabic Compiler & IDE</span>
+                </div>
+            </a>
+
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link active">🏠 الرئيسية</a></li>
+                    <li><a href="architecture.html" class="nav-link">📂 تشريح الملفات الهندسية</a></li>
+                    <li><a href="ide-guide.html" class="nav-link">🖥️ دليل المحرر والأزرار</a></li>
+                    <li><a href="compiler-pipeline.html" class="nav-link">⚙️ مراحل المترجم الست</a></li>
+                    <li><a href="requirements.html" class="nav-link">📋 متطلبات الدكتور والمطابقة</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="ide-guide.html" class="btn btn-primary btn-sm">▶ دليل المحرر التفاعلي</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-pill">
+                    <span>🌟 مشروع مقرر المترجمات العملي (جامعي)</span>
+                    <span style="opacity: 0.5;">|</span>
+                    <span>إشراف: أ.د. خالد الكهصة</span>
+                </div>
+
+                <h1 class="hero-title">
+                    مترجم لغة البرمجة العربية<br>
+                    <span class="highlight" style="background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        ومحرر الأكواد الذكي (Arabic IDE)
+                    </span>
+                </h1>
+
+                <p class="hero-subtitle">
+                    نظام برمجي متكامل ومبني وفق أعلى معايير <strong>هندسة البرمجيات (Clean Layered Architecture)</strong> بأحدث تقنيات <strong>C# (.NET 10)</strong> و <strong>WPF</strong>. يغطي دورة الترجمة الكاملة من قراءة النص العربي وتطبيعه وحتى توليد كود التجميع والتنفيذ الفعلي بالآلة الافتراضية.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="architecture.html" class="btn btn-primary">
+                        <span>📂 استعراض شجرة وهيكلية الملفات</span>
+                    </a>
+                    <a href="ide-guide.html" class="btn btn-secondary">
+                        <span>🖥️ شرح كل أزرار وقوائم الواجهة</span>
+                    </a>
+                    <a href="compiler-pipeline.html" class="btn btn-secondary">
+                        <span>⚡ محاكي مراحل المترجم الست</span>
+                    </a>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label">مراحل ترجمة متتالية كاملة</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">40/40</div>
+                        <div class="stat-label">اختبارات مؤتمتة ناجحة (100%)</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">برنامجاً عربياً تجريبياً متكاملاً</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">مطابقة متطلبات الدكتور خالد</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Highlights -->
+    <section style="padding: 4rem 0;">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">الهندسة المعمارية</span>
+                <h2>فصل الاهتمامات ونمط Clean Architecture</h2>
+                <p>تم بناء الحل البرمجي ليفصل المترجم المستقل تماماً عن واجهة المحرر الرسومية لتحقيق معايير الجودة الأكاديمية</p>
+            </div>
+
+            <div class="grid-3">
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>ArabicCompiler.Core</h3>
+                    <p>مكتبة فئات مستقلة تضم نواة المترجم بمراحله الست: المعجم، النحو، جدول الرموز، الفحص الدلالي، الكود ثلاثي العناوين (3AC)، توليد Assembly، والآلة الافتراضية (VM).</p>
+                    <a href="architecture.html#core" class="badge badge-primary">استكشف ملفات النواة ←</a>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⌨️</div>
+                    <h3>ArabicCompiler.Cli</h3>
+                    <p>المترجم التنفيذي المستقل لسطر الأوامر (Command-Line Interface). يمكن تشغيله مباشرة من PowerShell لترجمة أي ملف <code>.arb</code> وتصدير كافة مخرجات المراحل.</p>
+                    <a href="architecture.html#cli" class="badge badge-primary">استكشف أوامر المترجم ←</a>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🖥️</div>
+                    <h3>ArabicLanguageEditor</h3>
+                    <p>بيئة تطوير متكاملة (WPF IDE) تدعم الكتابة باللغة العربية من اليمين إلى اليسار (RTL)، مع 8 ألسنة تبويب لعرض كافة نتائج الترجمة وجدول الرموز والأخطاء.</p>
+                    <a href="ide-guide.html" class="badge badge-primary">استكشف دليل المحرر ←</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Preview Showcase -->
+    <section style="padding: 3rem 0; background: var(--bg-surface); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+        <div class="container">
+            <div class="grid-2" style="align-items: center;">
+                <div>
+                    <span class="section-tag">بنية اللغة العربية</span>
+                    <h2>كود عربي فصيح ذو قواعد نحوية صارمة</h2>
+                    <p>تدعم اللغة البرمجية الكلمات المحجوزة العربية، تطبيع الهمزات، حماية الثوابت، الأنواع الأولية والمركبة، الحلقات الثلاث، والتمرير بالمرجع:</p>
+
+                    <ul style="list-style: none; margin: 1.5rem 0;">
+                        <li style="margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.6rem;">
+                            <span class="badge badge-success">✓</span>
+                            <span>الأنواع الأولية: <code>صحيح</code>، <code>حقيقي</code>، <code>منطقي</code>، <code>حرفي</code>، <code>نصي</code></span>
+                        </li>
+                        <li style="margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.6rem;">
+                            <span class="badge badge-success">✓</span>
+                            <span>الأنواع المركبة: <code>سجل { ... }</code> والمصفوفات <code>مصفوفة [1..10] من صحيح</code></span>
+                        </li>
+                        <li style="margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.6rem;">
+                            <span class="badge badge-success">✓</span>
+                            <span>حلقات التكرار: <code>طالما</code>، <code>كرر..حتى</code>، <code>كرر..الى..خطوة</code></span>
+                        </li>
+                        <li style="margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.6rem;">
+                            <span class="badge badge-success">✓</span>
+                            <span>الإجراءات مع التمرير بالقيمة وبالمرجع <code>بالمرجع</code></span>
+                        </li>
+                    </ul>
+
+                    <a href="compiler-pipeline.html" class="btn btn-primary">جرب تحويل هذا الكود في المحاكي ←</a>
+                </div>
+
+                <div>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>02_متغيرات_وحساب.arb</span>
+                            <div class="code-dots">
+                                <div class="code-dot red"></div>
+                                <div class="code-dot yellow"></div>
+                                <div class="code-dot green"></div>
+                            </div>
+                        </div>
+                        <div class="code-content">
+<pre style="direction: rtl; text-align: right;"><span class="code-keyword">برنامج</span> مشروعي؛
+{
+    <span class="code-keyword">ثابت</span> زيادة = <span class="code-number">5</span>؛
+    <span class="code-keyword">متغير</span> س، حاصل: <span class="code-type">صحيح</span>؛
+
+    س = <span class="code-number">10</span>؛
+    حاصل = س + زيادة؛
+
+    <span class="code-keyword">اطبع</span>(<span class="code-string">"حاصل الجمع العربي ="</span>)؛
+    <span class="code-keyword">اطبع</span>(حاصل)؛
+}.</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Navigation Cards -->
+    <section style="padding: 5rem 0;">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">أقسام الموقع التوثيقي</span>
+                <h2>استكشف كافة تفاصيل ومخرجات المشروع</h2>
+                <p>اختر القسم الذي تود مراجعته أو دراسته للتحضير للمناقشة الجامعية</p>
+            </div>
+
+            <div class="grid-4">
+                <a href="architecture.html" class="card" style="text-decoration: none;">
+                    <div style="font-size: 2.2rem; margin-bottom: 1rem;">🗂️</div>
+                    <h3 style="color: var(--text-white);">تشريح شجرة الملفات</h3>
+                    <p>فهرس تفصيلي لكل ملف C# ومجلد في المشروع، مع بيان وظيفته الهندسية ودوره في خط الإنتاج.</p>
+                    <span class="badge badge-primary">دخول القسم ←</span>
+                </a>
+
+                <a href="ide-guide.html" class="card" style="text-decoration: none;">
+                    <div style="font-size: 2.2rem; margin-bottom: 1rem;">💻</div>
+                    <h3 style="color: var(--text-white);">دليل واجهة المحرر</h3>
+                    <p>شرح تفصيلي ودقيق لكل قائمة (ملف، تحرير، ترجمة، تشغيل، مساعدة) وكل زر وتبويب.</p>
+                    <span class="badge badge-success">دخول القسم ←</span>
+                </a>
+
+                <a href="compiler-pipeline.html" class="card" style="text-decoration: none;">
+                    <div style="font-size: 2.2rem; margin-bottom: 1rem;">⚙️</div>
+                    <h3 style="color: var(--text-white);">مراحل المترجم الست</h3>
+                    <p>شرح بالرسوم البيانية وتجربة محاكي تفاعلي حي لتحويل الكود خطوة بخطوة إلى لغة التجميع.</p>
+                    <span class="badge badge-warning">دخول القسم ←</span>
+                </a>
+
+                <a href="requirements.html" class="card" style="text-decoration: none;">
+                    <div style="font-size: 2.2rem; margin-bottom: 1rem;">🎓</div>
+                    <h3 style="color: var(--text-white);">مصفوفة المتطلبات</h3>
+                    <p>مطابقة بنود تكليف الدكتور خالد الكهصة بنسبة 100% وبنك أسئلة المناقشة المتوقعة وإجاباتها.</p>
+                    <span class="badge badge-purple">دخول القسم ←</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="nav-brand" style="margin-bottom: 1rem;">
+                        <div class="nav-logo-icon">ض</div>
+                        <span>مترجم لغة البرمجة العربية</span>
+                    </div>
+                    <p>مشروع مقرر المترجمات العملي - جامعة إب<br>إشراف الأستاذ الدكتور: خالد الكهصة.<br>مبني بأحدث تقنيات C# (.NET 10) و WPF بنمط Clean Architecture.</p>
+                </div>
+
+                <div class="footer-col">
+                    <h4>أقسام التوثيق</h4>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="architecture.html">تشريح الملفات والهيكلية</a></li>
+                        <li><a href="ide-guide.html">دليل المحرر والأزرار</a></li>
+                        <li><a href="compiler-pipeline.html">مراحل المترجم والمحاكي</a></li>
+                        <li><a href="requirements.html">مصفوفة متطلبات الدكتور</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>مكونات النظام</h4>
+                    <ul>
+                        <li><code>ArabicCompiler.Core</code> (نواة المترجم)</li>
+                        <li><code>ArabicCompiler.Cli</code> (سطر الأوامر)</li>
+                        <li><code>ArabicLanguageEditor</code> (محرر WPF)</li>
+                        <li><code>ArabicCompiler.Tests</code> (40 اختبار)</li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>روابط سريعة</h4>
+                    <ul>
+                        <li><a href="ide-guide.html">دليل تشغيل المحرر (F5/F6)</a></li>
+                        <li><a href="compiler-pipeline.html">المحاكي التفاعلي</a></li>
+                        <li><a href="requirements.html">أسئلة المناقشة الشائعة</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div>جميع الحقوق محفوظة &copy; 2026 | مشروع مترجم لغة البرمجة العربية ومحرر الأكواد الذكي</div>
+                <div>جامعة إب - كلية الحاسوب وتكنولوجيا المعلومات - مقرر المترجمات</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
